@@ -4,24 +4,20 @@ import { X, ChevronDown, ChevronUp } from 'lucide-react';
 interface FilterProps {
     isOpen: boolean;
     onClose: () => void;
+    priceRange: number[];
+    setPriceRange: (range: number[]) => void;
+    materials: any[];
 }
 
-const Filter: React.FC<FilterProps> = ({ isOpen, onClose }) => {
-    const [priceRange, setPriceRange] = useState([0, 10000]);
+const Filter: React.FC<FilterProps> = ({ isOpen, onClose, priceRange, setPriceRange, materials }) => {
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
-        category: true,
         price: true,
         material: true,
-        occasion: true
     });
 
     const toggleSection = (section: string) => {
         setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
     };
-
-    const categories = ['Necklaces', 'Earrings', 'Bracelets', 'Rings', 'Sets', 'Bangles'];
-    const materials = ['Gold', 'Silver', 'Copper', 'Mixed Metal'];
-    const occasions = ['Wedding', 'Daily Wear', 'Festival', 'Traditional'];
 
     return (
         <aside className={`fixed inset-y-0 left-0 z-40 w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0 lg:shadow-none lg:w-64 lg:block lg:border-r border-gray-100`}>
@@ -31,27 +27,6 @@ const Filter: React.FC<FilterProps> = ({ isOpen, onClose }) => {
                     <button onClick={onClose} className="text-gray-500 hover:text-navy">
                         <X size={24} />
                     </button>
-                </div>
-
-                {/* Categories */}
-                <div className="mb-6 border-b border-gray-100 pb-6">
-                    <button
-                        className="flex justify-between items-center w-full text-left font-bold text-navy mb-4"
-                        onClick={() => toggleSection('category')}
-                    >
-                        <span>Category</span>
-                        {expandedSections.category ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                    </button>
-                    {expandedSections.category && (
-                        <div className="space-y-2">
-                            {categories.map(cat => (
-                                <label key={cat} className="flex items-center gap-2 cursor-pointer group">
-                                    <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-gold focus:ring-gold" />
-                                    <span className="text-gray-600 group-hover:text-gold transition-colors">{cat}</span>
-                                </label>
-                            ))}
-                        </div>
-                    )}
                 </div>
 
                 {/* Price Range */}
@@ -83,7 +58,7 @@ const Filter: React.FC<FilterProps> = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Material */}
-                <div className="mb-6 border-b border-gray-100 pb-6">
+                <div className="mb-6">
                     <button
                         className="flex justify-between items-center w-full text-left font-bold text-navy mb-4"
                         onClick={() => toggleSection('material')}
@@ -94,30 +69,9 @@ const Filter: React.FC<FilterProps> = ({ isOpen, onClose }) => {
                     {expandedSections.material && (
                         <div className="space-y-2">
                             {materials.map(mat => (
-                                <label key={mat} className="flex items-center gap-2 cursor-pointer group">
+                                <label key={mat._id} className="flex items-center gap-2 cursor-pointer group">
                                     <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-gold focus:ring-gold" />
-                                    <span className="text-gray-600 group-hover:text-gold transition-colors">{mat}</span>
-                                </label>
-                            ))}
-                        </div>
-                    )}
-                </div>
-
-                {/* Occasion */}
-                <div className="mb-6">
-                    <button
-                        className="flex justify-between items-center w-full text-left font-bold text-navy mb-4"
-                        onClick={() => toggleSection('occasion')}
-                    >
-                        <span>Occasion</span>
-                        {expandedSections.occasion ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                    </button>
-                    {expandedSections.occasion && (
-                        <div className="space-y-2">
-                            {occasions.map(occ => (
-                                <label key={occ} className="flex items-center gap-2 cursor-pointer group">
-                                    <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-gold focus:ring-gold" />
-                                    <span className="text-gray-600 group-hover:text-gold transition-colors">{occ}</span>
+                                    <span className="text-gray-600 group-hover:text-gold transition-colors">{mat.name}</span>
                                 </label>
                             ))}
                         </div>

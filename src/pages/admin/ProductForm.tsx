@@ -3,11 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Button from '../../components/Button';
 import { getProductById, addProduct, updateProduct, uploadImage } from '../../services/productService';
+import { getCategories } from '../../services/categoryService';
+import { getMaterials } from '../../services/materialService';
 import { ArrowLeft, Save, Upload, X } from 'lucide-react';
 
 interface ProductFormData {
     name: string;
     category: string;
+    material: string;
     price: number;
     stock: number;
     image: string;
@@ -21,16 +24,33 @@ const ProductForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
+    const [categories, setCategories] = useState<any[]>([]);
+    const [materials, setMaterials] = useState<any[]>([]);
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<ProductFormData>();
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [categoriesData, materialsData] = await Promise.all([
+                    getCategories(),
+                    getMaterials()
+                ]);
+                setCategories(categoriesData);
+                setMaterials(materialsData);
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+            }
+        };
+        fetchData();
+
         if (isEditMode) {
             const fetchProduct = async () => {
                 try {
                     const product = await getProductById(Number(id));
                     setValue('name', product.name);
                     setValue('category', product.category);
+                    setValue('material', product.material);
                     setValue('price', product.price);
                     setValue('stock', product.stock);
                     setValue('stock', product.stock);
@@ -92,12 +112,34 @@ const ProductForm = () => {
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-gray-700">Category</label>
-                            <input
+                            <select
                                 {...register('category', { required: 'Category is required' })}
-                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold/50"
-                                placeholder="e.g. Sarees"
-                            />
+                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold/50 bg-white"
+                            >
+                                <option value="">Select a category</option>
+                                {categories.map((cat) => (
+                                    <option key={cat._id} value={cat.name}>
+                                        {cat.name}
+                                    </option>
+                                ))}
+                            </select>
                             {errors.category && <p className="text-red-500 text-xs">{errors.category.message}</p>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">Material</label>
+                            <select
+                                {...register('material', { required: 'Material is required' })}
+                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold/50 bg-white"
+                            >
+                                <option value="">Select a material</option>
+                                {materials.map((mat) => (
+                                    <option key={mat._id} value={mat.name}>
+                                        {mat.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.material && <p className="text-red-500 text-xs">{errors.material.message}</p>}
                         </div>
 
                         <div className="space-y-2">

@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Heart, Search, Menu, X, User } from 'lucide-react';
-import Button from './Button';
+import { ShoppingCart, Menu, X, User, Heart } from 'lucide-react';
+import { useCartStore } from '../store/cartStore';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
     const location = useLocation();
+    const cartItemsCount = useCartStore(state => state.items.length);
+    const { isAuthenticated, user } = useAuth();
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
+            // This useEffect was for isScrolled, which is now removed.
+            // Keeping it empty or removing it if no other scroll logic is needed.
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -26,7 +29,7 @@ const Navbar = () => {
     const isActive = (path: string) => location.pathname === path;
 
     return (
-        <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'}`}>
+        <nav className={`fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-md py-2`}>
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex justify-between items-center">
                     {/* Logo */}
@@ -34,7 +37,7 @@ const Navbar = () => {
                         <div className="w-10 h-10 bg-navy rounded-full flex items-center justify-center text-gold font-bold text-xl group-hover:scale-110 transition-transform">
                             S
                         </div>
-                        <span className={`font-heading font-bold text-xl tracking-wide ${isScrolled ? 'text-navy' : 'text-navy'}`}>
+                        <span className={`font-heading font-bold text-xl tracking-wide text-navy`}>
                             SANJANA<span className="text-gold">.</span>
                         </span>
                     </Link>
@@ -54,21 +57,28 @@ const Navbar = () => {
 
                     {/* Icons */}
                     <div className="hidden md:flex items-center gap-4">
-                        <button className="text-navy hover:text-gold transition-colors">
-                            <Search size={20} />
-                        </button>
-                        <Link to="/wishlist" className="text-navy hover:text-gold transition-colors">
-                            <Heart size={20} />
+                        <Link to="/cart" className="relative p-2 hover:text-gold transition-colors">
+                            <ShoppingCart size={24} />
+                            {cartItemsCount > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-gold text-navy text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                    {cartItemsCount}
+                                </span>
+                            )}
                         </Link>
-                        <Link to="/cart" className="text-navy hover:text-gold transition-colors relative">
-                            <ShoppingCart size={20} />
-                            <span className="absolute -top-2 -right-2 bg-gold text-navy text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                                0
-                            </span>
-                        </Link>
-                        <Button variant="primary" size="sm" className="ml-2">
-                            Login
-                        </Button>
+
+                        {isAuthenticated ? (
+                            <Link to="/account" className="p-2 hover:text-gold transition-colors flex items-center gap-2" title="My Account">
+                                <User size={24} />
+                                <span className="hidden lg:inline text-sm font-medium">{user?.name.split(' ')[0]}</span>
+                            </Link>
+                        ) : (
+                            <div className="flex items-center gap-4">
+                                <Link to="/login" className="text-sm font-medium hover:text-gold transition-colors">Login</Link>
+                                <Link to="/signup" className="bg-gold text-navy px-4 py-2 rounded-full text-sm font-bold hover:bg-yellow-500 transition-colors">
+                                    Sign Up
+                                </Link>
+                            </div>
+                        )}
                     </div>
 
                     {/* Mobile Menu Button */}

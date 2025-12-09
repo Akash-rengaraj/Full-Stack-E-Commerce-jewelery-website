@@ -143,7 +143,7 @@ const Hero = () => {
                             <img
                                 src={heroimg}
                                 alt="Luxury Gold Necklace"
-                                className="w-full h-full object-contain drop-shadow-2xl filter contrast-125 mix-blend-screen"
+                                className="w-full h-full object-contain drop-shadow-2xl filter contrast-125"
                             />
                             {/* Shine Effect Overlay */}
                             <div

@@ -32,11 +32,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
     return (
         <div className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 ease-out transform hover:-translate-y-1">
             {/* Image Container */}
-            <div className="relative aspect-[4/5] overflow-hidden bg-gray-100">
+            <div className="relative aspect-square overflow-hidden bg-gray-50 p-4">
                 <img
-                    src={image}
+                    src={image.startsWith('http') ? image : `http://localhost:5000${image}`}
                     alt={name}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
+                    className="w-full h-full object-contain object-center transition-transform duration-700 ease-out group-hover:scale-110 mix-blend-multiply"
                 />
 
                 {/* Overlay */}

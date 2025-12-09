@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { DollarSign, ShoppingBag, Package, Users, TrendingUp } from 'lucide-react';
+import { DollarSign, ShoppingBag, Package, Users } from 'lucide-react';
 import { getDashboardStats } from '../../services/dashboardService';
 import { getOrders } from '../../services/orderService';
 import EmptyState from '../../components/admin/EmptyState';
@@ -52,10 +52,6 @@ const Dashboard = () => {
                             <div className={`p-3 rounded-lg ${stat.color}`}>
                                 {stat.icon}
                             </div>
-                            <span className="flex items-center text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">
-                                <TrendingUp size={12} className="mr-1" />
-                                {stat.trend}
-                            </span>
                         </div>
                         <h3 className="text-gray-500 text-sm font-medium">{stat.title}</h3>
                         <p className="text-2xl font-bold text-navy mt-1">{stat.value}</p>

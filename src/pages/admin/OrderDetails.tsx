@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Package, Truck, MapPin, User, Mail, Phone } from 'lucide-react';
 import { getOrders, updateOrderStatus } from '../../services/orderService';
-import Button from '../../components/Button';
+
 
 const OrderDetails = () => {
     const { id } = useParams();
@@ -84,8 +84,8 @@ const OrderDetails = () => {
                                     key={status}
                                     onClick={() => handleStatusChange(status)}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${order.status === status
-                                            ? 'bg-navy text-white'
-                                            : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                        ? 'bg-navy text-white'
+                                        : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                                         }`}
                                 >
                                     {status}

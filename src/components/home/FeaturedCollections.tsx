@@ -81,7 +81,7 @@ const FeaturedCollections = () => {
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                     >
                         {products.map((product, index) => (
-                            <div key={`${product.id}-${index}`} className="min-w-[280px] md:min-w-[320px] snap-start transform transition-transform hover:scale-105 duration-300">
+                            <div key={`${product.id}-${index}`} className="min-w-[260px] md:min-w-[280px] snap-start transform transition-transform hover:scale-105 duration-300">
                                 <ProductCard {...product} />
                             </div>
                         ))}

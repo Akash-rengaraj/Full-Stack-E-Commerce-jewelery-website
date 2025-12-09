@@ -1,11 +1,22 @@
 [
     {
-        "id": 1765279235347,
-        "name": "Simple Ring",
-        "category": "Ring",
+        "id": 1765308503897,
+        "name": "Simple Necklace",
+        "category": "Necklace",
+        "material": "Covering",
+        "price": 100,
+        "stock": 10,
+        "image": "/uploads/image-1765308497852.jpg",
+        "description": "Simple necklace"
+    },
+    {
+        "id": 1765308540890,
+        "name": "Simple Earring",
+        "category": "Earring",
+        "material": "Covering",
         "price": 50,
-        "stock": 100,
-        "image": "https://kymee.in/cdn/shop/files/KRD0025.1748copy.webp?v=1755773453",
-        "description": "Simple Ring"
+        "stock": 50,
+        "image": "/uploads/image-1765308533017.jpg",
+        "description": "Simple Earring"
     }
 ]

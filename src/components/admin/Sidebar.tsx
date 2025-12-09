@@ -11,6 +11,8 @@ const Sidebar = () => {
     const navItems = [
         { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/admin' },
         { icon: <Package size={20} />, label: 'Products', path: '/admin/products' },
+        { icon: <LayoutDashboard size={20} />, label: 'Categories', path: '/admin/categories' },
+        { icon: <Package size={20} />, label: 'Materials', path: '/admin/materials' },
         { icon: <ShoppingBag size={20} />, label: 'Orders', path: '/admin/orders' },
         { icon: <Users size={20} />, label: 'Customers', path: '/admin/customers' },
         { icon: <Settings size={20} />, label: 'Settings', path: '/admin/settings' },
