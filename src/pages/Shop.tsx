@@ -25,7 +25,7 @@ const Shop = () => {
         const fetchProduct = async () => {
             if (!id) return;
             try {
-                const data = await getProductById(Number(id));
+                const data = await getProductById(id);
                 setProduct(data);
                 if (data.image) {
                     // Ensure image is an array for the gallery
@@ -253,7 +253,7 @@ const Shop = () => {
                                 className="flex-1"
                                 onClick={() => {
                                     addToCart({
-                                        id: product.id,
+                                        id: product._id || product.id,
                                         name: product.name,
                                         price: product.price,
                                         image: productImages[0],
@@ -272,7 +272,7 @@ const Shop = () => {
                                 className="flex-1"
                                 onClick={() => {
                                     addToCart({
-                                        id: product.id,
+                                        id: product._id || product.id,
                                         name: product.name,
                                         price: product.price,
                                         image: productImages[0],

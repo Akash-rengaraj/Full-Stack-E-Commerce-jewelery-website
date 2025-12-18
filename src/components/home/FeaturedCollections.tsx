@@ -12,8 +12,9 @@ const FeaturedCollections = () => {
         const fetchProducts = async () => {
             try {
                 const data: any = await getProducts();
-                // Duplicate for infinite scroll effect
-                setProducts(data);
+                // Filter for featured products
+                const featured = data.filter((p: any) => p.isFeatured);
+                setProducts(featured);
             } catch (error) {
                 console.error('Failed to fetch products:', error);
             }
@@ -81,7 +82,7 @@ const FeaturedCollections = () => {
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                     >
                         {products.map((product, index) => (
-                            <div key={`${product.id}-${index}`} className="min-w-[260px] md:min-w-[280px] snap-start transform transition-transform hover:scale-105 duration-300">
+                            <div key={`${product._id || product.id}-${index}`} className="w-[calc(33.333%-16px)] flex-shrink-0 snap-start transform transition-transform hover:scale-105 duration-300">
                                 <ProductCard {...product} />
                             </div>
                         ))}

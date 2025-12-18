@@ -10,12 +10,12 @@ export const addCustomer = async (customerData: any) => {
     return response.data;
 };
 
-export const updateCustomer = async (id: number, customerData: any) => {
+export const updateCustomer = async (id: string, customerData: any) => {
     const response = await api.put(`/customers/${id}`, customerData);
     return response.data;
 };
 
-export const deleteCustomer = async (id: number) => {
+export const deleteCustomer = async (id: string) => {
     const response = await api.delete(`/customers/${id}`);
     return response.data;
 };

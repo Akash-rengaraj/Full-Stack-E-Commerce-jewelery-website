@@ -57,7 +57,8 @@ const signup = async (req, res) => {
 
         await sendSMS(phoneNumber, otp);
 
-        res.status(200).json({ message: 'OTP sent successfully' });
+        // For debugging/demo purposes, return OTP in response
+        res.status(200).json({ message: 'OTP sent successfully', otp });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -116,7 +117,8 @@ const login = async (req, res) => {
 
             await sendSMS(phoneNumber, otp);
 
-            res.status(200).json({ message: '2FA OTP sent' });
+            // For debugging/demo purposes, return OTP in response
+            res.status(200).json({ message: '2FA OTP sent', otp });
         } else {
             res.status(401).json({ message: 'Invalid phone number or password' });
         }

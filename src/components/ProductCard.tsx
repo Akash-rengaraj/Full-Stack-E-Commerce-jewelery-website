@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import Button from './Button';
 
 interface ProductCardProps {
-    id: string;
+    id?: string;
+    _id?: string;
     name: string;
     price: number;
     originalPrice?: number;
@@ -17,6 +18,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({
     id,
+    _id,
     name,
     price,
     originalPrice,
@@ -27,6 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     onAddToCart,
     onToggleWishlist,
 }) => {
+    const productId = _id || id;
     const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
     return (
@@ -98,7 +101,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     <span className="text-xs text-gray-400">({reviews})</span>
                 </div>
 
-                <Link to={`/product/${id}`}>
+                <Link to={`/product/${productId}`}>
                     <h3 className="font-heading font-semibold text-navy text-lg mb-1 truncate group-hover:text-gold transition-colors">
                         {name}
                     </h3>

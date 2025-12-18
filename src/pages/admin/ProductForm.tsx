@@ -47,12 +47,11 @@ const ProductForm = () => {
         if (isEditMode) {
             const fetchProduct = async () => {
                 try {
-                    const product = await getProductById(Number(id));
+                    const product = await getProductById(id!);
                     setValue('name', product.name);
                     setValue('category', product.category);
                     setValue('material', product.material);
                     setValue('price', product.price);
-                    setValue('stock', product.stock);
                     setValue('stock', product.stock);
                     setValue('image', product.image);
                     setPreviewImage(product.image);
@@ -70,7 +69,7 @@ const ProductForm = () => {
         setIsLoading(true);
         try {
             if (isEditMode) {
-                await updateProduct(Number(id), data);
+                await updateProduct(id!, data);
             } else {
                 await addProduct(data);
             }

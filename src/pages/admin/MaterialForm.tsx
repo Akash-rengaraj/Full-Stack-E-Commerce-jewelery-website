@@ -42,9 +42,10 @@ const MaterialForm = () => {
                 await addMaterial(data);
             }
             navigate('/admin/materials');
-        } catch (error) {
+        } catch (error: any) {
             console.error('Failed to save material:', error);
-            alert('Failed to save material');
+            const message = error.response?.data?.message || 'Failed to save material';
+            alert(message);
         } finally {
             setIsLoading(false);
         }

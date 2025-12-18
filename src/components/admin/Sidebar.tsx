@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, ShoppingBag, Users, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Users, Settings, LogOut, Star, Phone } from 'lucide-react';
 
 const Sidebar = () => {
     const location = useLocation();
@@ -11,10 +11,12 @@ const Sidebar = () => {
     const navItems = [
         { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/admin' },
         { icon: <Package size={20} />, label: 'Products', path: '/admin/products' },
+        { icon: <Star size={20} />, label: 'Featured', path: '/admin/featured' },
         { icon: <LayoutDashboard size={20} />, label: 'Categories', path: '/admin/categories' },
         { icon: <Package size={20} />, label: 'Materials', path: '/admin/materials' },
         { icon: <ShoppingBag size={20} />, label: 'Orders', path: '/admin/orders' },
         { icon: <Users size={20} />, label: 'Customers', path: '/admin/customers' },
+        { icon: <Phone size={20} />, label: 'Call For Action', path: '/admin/cta' },
         { icon: <Settings size={20} />, label: 'Settings', path: '/admin/settings' },
     ];
 

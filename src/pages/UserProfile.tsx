@@ -1,15 +1,46 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 import { User, Package, LogOut } from 'lucide-react';
 
 const UserProfile = () => {
-    const { user, logout } = useAuth();
+    const { user, logout, login, token } = useAuth();
     const navigate = useNavigate();
+    const [isEditing, setIsEditing] = useState(false);
+    const [name, setName] = useState(user?.name || '');
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (user) {
+            setName(user.name);
+        }
+    }, [user]);
 
     const handleLogout = () => {
         logout();
         navigate('/');
+    };
+
+    const handleSave = async () => {
+        if (!user || !token) return;
+        setIsLoading(true);
+        try {
+            // In a real app, you would call an API to update the user here.
+            // For now, we'll simulate an update and update the local context.
+            // const updatedUser = await updateProfile({ name });
+
+            // Simulating API call
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            const updatedUser = { ...user, name };
+            login(updatedUser, token);
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Failed to update profile:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     if (!user) {
@@ -26,14 +57,25 @@ const UserProfile = () => {
                 <div className="bg-white shadow rounded-lg overflow-hidden">
                     {/* Header */}
                     <div className="bg-navy px-6 py-8">
-                        <div className="flex items-center">
-                            <div className="h-20 w-20 rounded-full bg-gold flex items-center justify-center text-navy text-3xl font-bold">
-                                {user.name.charAt(0).toUpperCase()}
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                                <div className="h-20 w-20 rounded-full bg-gold flex items-center justify-center text-navy text-3xl font-bold">
+                                    {user.name.charAt(0).toUpperCase()}
+                                </div>
+                                <div className="ml-6">
+                                    <h1 className="text-2xl font-bold text-white">{user.name}</h1>
+                                    <p className="text-gold">{user.phoneNumber}</p>
+                                </div>
                             </div>
-                            <div className="ml-6">
-                                <h1 className="text-2xl font-bold text-white">{user.name}</h1>
-                                <p className="text-gold">{user.phoneNumber}</p>
-                            </div>
+                            {!isEditing && (
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => setIsEditing(true)}
+                                    className="text-sm"
+                                >
+                                    Edit Profile
+                                </Button>
+                            )}
                         </div>
                     </div>
 
@@ -46,10 +88,47 @@ const UserProfile = () => {
                                     <User className="mr-2" />
                                     <h2 className="text-lg font-bold">Account Details</h2>
                                 </div>
-                                <div className="space-y-2 text-gray-600">
-                                    <p><span className="font-medium">Name:</span> {user.name}</p>
-                                    <p><span className="font-medium">Phone:</span> {user.phoneNumber}</p>
-                                    <p><span className="font-medium">Role:</span> {user.isAdmin ? 'Admin' : 'Customer'}</p>
+                                <div className="space-y-4 text-gray-600">
+                                    {isEditing ? (
+                                        <div className="space-y-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                                <input
+                                                    type="text"
+                                                    value={name}
+                                                    onChange={(e) => setName(e.target.value)}
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-navy"
+                                                />
+                                            </div>
+                                            <div className="flex gap-2">
+                                                <Button
+                                                    variant="primary"
+                                                    onClick={handleSave}
+                                                    disabled={isLoading}
+                                                    className="text-sm"
+                                                >
+                                                    {isLoading ? 'Saving...' : 'Save Changes'}
+                                                </Button>
+                                                <Button
+                                                    variant="secondary"
+                                                    onClick={() => {
+                                                        setIsEditing(false);
+                                                        setName(user.name);
+                                                    }}
+                                                    disabled={isLoading}
+                                                    className="text-sm bg-gray-200 text-gray-800 hover:bg-gray-300"
+                                                >
+                                                    Cancel
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <p><span className="font-medium">Name:</span> {user.name}</p>
+                                            <p><span className="font-medium">Phone:</span> {user.phoneNumber}</p>
+                                            <p><span className="font-medium">Role:</span> {user.isAdmin ? 'Admin' : 'Customer'}</p>
+                                        </>
+                                    )}
                                 </div>
                             </div>
 

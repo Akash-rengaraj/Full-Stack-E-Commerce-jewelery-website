@@ -6,9 +6,14 @@ import Filter from '../components/gallery/Filter';
 import { getProducts } from '../services/productService';
 import { getCategories } from '../services/categoryService';
 import { getMaterials } from '../services/materialService';
+import { useCartStore } from '../store/cartStore';
 
 const Gallery = () => {
+    const { addToCart } = useCartStore();
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    // ... existing state ...
+
+
     const [products, setProducts] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
     const [materials, setMaterials] = useState<any[]>([]);
@@ -178,8 +183,17 @@ const Gallery = () => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {currentItems.map((product) => (
                                     <ProductCard
-                                        key={product.id}
+                                        key={product._id || product.id}
                                         {...product}
+                                        onAddToCart={() => addToCart({
+                                            id: product._id || product.id,
+                                            name: product.name,
+                                            price: product.price,
+                                            image: product.image,
+                                            quantity: 1,
+                                            size: 'Standard',
+                                            color: 'Default'
+                                        })}
                                     />
                                 ))}
                             </div>

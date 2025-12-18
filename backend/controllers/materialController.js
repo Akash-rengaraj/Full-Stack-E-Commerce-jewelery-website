@@ -35,6 +35,10 @@ const createMaterial = async (req, res) => {
     const { name, description } = req.body;
 
     try {
+        if (!name) {
+            return res.status(400).json({ message: 'Material name is required' });
+        }
+
         const materialExists = await Material.findOne({ name });
 
         if (materialExists) {

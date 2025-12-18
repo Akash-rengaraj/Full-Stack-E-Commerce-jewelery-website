@@ -48,9 +48,10 @@ const CategoryForm = () => {
                 await addCategory(data);
             }
             navigate('/admin/categories');
-        } catch (error) {
+        } catch (error: any) {
             console.error('Failed to save category:', error);
-            alert('Failed to save category');
+            const message = error.response?.data?.message || 'Failed to save category';
+            alert(message);
         } finally {
             setIsLoading(false);
         }

@@ -1,0 +1,20 @@
+# Sanjana Creations - Premium Jewelry E-Commerce Platform
+
+## Project Overview
+
+Sanjana Creations is a sophisticated, full-stack e-commerce application designed to provide a premium digital storefront for handcrafted jewelry. This project represents the intersection of artisanal elegance and modern web technology, delivering a seamless, visually immersive shopping experience for customers while offering powerful management tools for business owners.
+
+At its core, the platform is built on a robust and scalable technology stack. The frontend leverages the power of **React** and **TypeScript**, orchestrated by **Vite** for lightning-fast performance and optimal developer experience. The user interface is meticulously styled using **Tailwind CSS**, ensuring a responsive and bespoke design that adapts perfectly to any device. To elevate the user engagement, **GSAP (GreenSock Animation Platform)** is integrated to create fluid, high-performance animations, such as the signature circular product display that offers a unique and interactive way to browse collections.
+
+The backend is powered by **Node.js** and **Express**, providing a secure and efficient RESTful API. It handles complex operations including user authentication (via **JWT** and **BCrypt**), product management, and order processing. The data is persisted using **MongoDB**, ensuring flexibility and speed in handling product catalogs and user data.
+
+## Key Features
+
+*   **Immersive User Experience**: A visually stunning interface with smooth transitions, parallax effects, and interactive product showcases designed to captivate visitors.
+*   **Comprehensive Admin Dashboard**: A fully functional admin panel that allows for real-time management of products, inventory, customers, and orders. Admins can easily add new collections, update stock levels, and track sales performance.
+*   **Secure Authentication**: Robust user registration and login systems protecting customer data and ensuring secure transactions.
+*   **Dynamic Product Management**: Flexible systems for categorizing jewelry, managing featured collections, and highlighting new arrivals.
+*   **Responsive Design**: A mobile-first approach ensuring the site looks and functions beautifully on smartphones, tablets, and desktop computers.
+*   **Performance Optimized**: Utilizing modern build tools and coding practices to ensure fast load times and smooth interactions, crucial for e-commerce conversion.
+
+This repository contains the complete source code for the Sanjana Creations platform, including the frontend client, backend server, and database configurations, making it a comprehensive solution for modern e-commerce needs.

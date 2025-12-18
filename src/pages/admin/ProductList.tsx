@@ -21,7 +21,7 @@ const ProductList = () => {
         fetchProducts();
     }, []);
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: string) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
             try {
                 await deleteProduct(id);
@@ -58,11 +58,11 @@ const ProductList = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
-                            {products.map((product, index) => (
-                                <tr key={index} className="hover:bg-gray-50 transition-colors">
+                            {products.map((product) => (
+                                <tr key={product._id} className="hover:bg-gray-50 transition-colors">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-4">
-                                            <img src={product.image} alt={product.name} className="w-10 h-10 rounded-lg object-cover" />
+                                            <img src={product.image.startsWith('http') ? product.image : `http://localhost:5000${product.image}`} alt={product.name} className="w-10 h-10 rounded-lg object-cover" />
                                             <span className="font-medium text-navy">{product.name}</span>
                                         </div>
                                     </td>
@@ -75,13 +75,13 @@ const ProductList = () => {
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <button
-                                            onClick={() => navigate(`/admin/products/edit/${product.id}`)}
+                                            onClick={() => navigate(`/admin/products/edit/${product._id}`)}
                                             className="text-gold hover:text-navy text-sm font-medium mr-3"
                                         >
                                             Edit
                                         </button>
                                         <button
-                                            onClick={() => handleDelete(product.id)}
+                                            onClick={() => handleDelete(product._id)}
                                             className="text-red-500 hover:text-red-700 text-sm font-medium"
                                         >
                                             Delete

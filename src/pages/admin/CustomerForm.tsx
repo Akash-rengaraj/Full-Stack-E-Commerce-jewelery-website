@@ -25,7 +25,8 @@ const CustomerForm = () => {
             const fetchCustomer = async () => {
                 try {
                     const customers = await getCustomers();
-                    const customer = customers.find((c: any) => c.id === Number(id));
+                    // Compare as strings since MongoDB IDs are strings
+                    const customer = customers.find((c: any) => String(c.id) === id || String(c._id) === id);
                     if (customer) {
                         setValue('name', customer.name);
                         setValue('email', customer.email);
@@ -40,17 +41,21 @@ const CustomerForm = () => {
         }
     }, [id, isEditMode, setValue]);
 
+    const [error, setError] = useState<string | null>(null);
+
     const onSubmit = async (data: CustomerFormData) => {
         setIsLoading(true);
+        setError(null);
         try {
-            if (isEditMode) {
-                await updateCustomer(Number(id), data);
+            if (isEditMode && id) {
+                await updateCustomer(id, data);
             } else {
                 await addCustomer({ ...data, orders: 0, totalSpent: 0 });
             }
             navigate('/admin/customers');
-        } catch (error) {
-            console.error('Failed to save customer:', error);
+        } catch (err: any) {
+            console.error('Failed to save customer:', err);
+            setError(err.response?.data?.message || 'Failed to save customer. Please try again.');
         } finally {
             setIsLoading(false);
         }
@@ -71,6 +76,11 @@ const CustomerForm = () => {
             </div>
 
             <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 max-w-2xl">
+                {error && (
+                    <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
+                        {error}
+                    </div>
+                )}
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
