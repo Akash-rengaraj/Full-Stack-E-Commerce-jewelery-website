@@ -13,7 +13,7 @@
 
 **A Premium E-Commerce Experience for Handcrafted Jewelry**
 
-[View Demo](#) · [Report Bug](#) · [Request Feature](#)
+[View Demo](https://full-stack-e-commerce-jewelery-website.onrender.com) · [Report Bug](#) · [Request Feature](#)
 
 </div>
 
